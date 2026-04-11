@@ -21,6 +21,16 @@ ssh root@134.199.227.30
 cd /opt/news-intel-dashboard && git pull && systemctl restart news-intel
 ```
 
+## 4. Sync sources (after adding/changing sources.json)
+```bash
+source .venv/bin/activate && python scripts/sync_sources.py
+```
+
+## 5. Manually trigger collection
+```bash
+source .venv/bin/activate && python scripts/run_collection.py
+```
+
 Site is live at https://akledger.com
 
 ---
