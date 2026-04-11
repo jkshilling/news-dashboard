@@ -155,11 +155,14 @@ a:hover { color: var(--accent); }
   background: var(--border);
 }
 
-.topic-card-link { display: block; }
+.topic-card-link { display: block; height: 100%; }
+
 
 .topic-card {
   background: var(--bg-card);
   padding: 1.5rem;
+  height: 100%;
+  box-sizing: border-box;
   transition: background 0.12s;
   cursor: pointer;
 }

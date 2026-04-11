@@ -1,4 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="4" fill="#0e1016"/>
-  <text x="16" y="23" font-family="monospace" font-size="20" font-weight="bold" fill="#5b8fc7" text-anchor="middle">N</text>
+  <rect width="32" height="32" rx="3" fill="#0e1016"/>
+  <!-- Alaska simplified outline -->
+  <path d="M2,7 L17,4 L20,7 L19,16 L17,18 L22,23 L23,28 L18,27 L16,21 L13,22 L7,20 L3,15 L2,9 Z"
+        fill="#162030" stroke="#5b8fc7" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- Compass: circle with north arrow -->
+  <circle cx="27" cy="8" r="4" fill="#0e1016" stroke="#5b8fc7" stroke-width="0.8"/>
+  <line x1="27" y1="5" x2="27" y2="11" stroke="#5b8fc7" stroke-width="0.7"/>
+  <polygon points="27,4 25.5,6.5 28.5,6.5" fill="#5b8fc7"/>
 </svg>

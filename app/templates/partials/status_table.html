@@ -18,10 +18,10 @@
         <tr class="{% if row.is_error %}row-error{% endif %}">
           <td class="status-name">{{ row.name }}</td>
           <td class="status-time">
-            {{ row.last_attempted_at | akdt }}
+            {{ row.last_attempted_at | akdt('%-m/%-d %-I:%M %p') }}
           </td>
           <td class="status-time">
-            {{ row.last_succeeded_at | akdt }}
+            {{ row.last_succeeded_at | akdt('%-m/%-d %-I:%M %p') }}
           </td>
           <td class="status-num">{{ row.items_found if row.items_found is not none else '—' }}</td>
           <td class="status-num">{{ row.items_stored if row.items_stored is not none else '—' }}</td>
@@ -35,7 +35,7 @@
             {% endif %}
           </td>
           <td class="status-error">
-            {% if row.last_error %}<span class="error-text" title="{{ row.last_error }}">{{ row.last_error[:80] }}{% if row.last_error|length > 80 %}&hellip;{% endif %}</span>{% else %}&mdash;{% endif %}
+            {% if row.last_error %}{{ row.last_attempted_at | akdt('%-m/%-d %-I:%M %p') }}{% else %}—{% endif %}
           </td>
         </tr>
         {% else %}
@@ -71,7 +71,7 @@
             </span>
           </td>
           <td class="status-time">
-            {{ row.synthesis_last_run | akdt }}
+            {{ row.synthesis_last_run | akdt('%-m/%-d %-I:%M %p') }}
           </td>
           <td class="status-num">{{ row.items_found if row.items_found is not none else '—' }}</td>
           <td class="status-num">{{ row.items_stored if row.items_stored is not none else '—' }}</td>
@@ -85,7 +85,7 @@
             {% endif %}
           </td>
           <td class="status-error">
-            {% if row.last_error %}<span class="error-text" title="{{ row.last_error }}">{{ row.last_error[:80] }}{% if row.last_error|length > 80 %}&hellip;{% endif %}</span>{% else %}&mdash;{% endif %}
+            {% if row.last_error %}{{ row.last_attempted_at | akdt('%-m/%-d %-I:%M %p') }}{% else %}—{% endif %}
           </td>
         </tr>
         {% else %}
