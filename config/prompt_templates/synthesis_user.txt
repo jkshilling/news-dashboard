@@ -1,0 +1,11 @@
+Topic: {topic_name}
+Description: {topic_description}
+Monitoring terms: {query_terms}
+
+Change context (rules-based delta from previous brief):
+{what_changed}
+
+Article digest ({article_digest_count} articles after deduplication):
+{article_digest}
+
+Produce the intelligence brief JSON now.

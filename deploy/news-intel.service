@@ -1,0 +1,15 @@
+[Unit]
+Description=News Intel Dashboard
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/opt/news-intel-dashboard
+EnvironmentFile=/opt/news-intel-dashboard/.env
+ExecStart=/opt/news-intel-dashboard/.venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

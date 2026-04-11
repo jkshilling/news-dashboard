@@ -1,0 +1,97 @@
+<div class="status-section">
+  <h2 class="section-title">Source Pull Status</h2>
+  <div class="status-table-wrap">
+    <table class="status-table">
+      <thead>
+        <tr>
+          <th>Source</th>
+          <th>Last Attempted</th>
+          <th>Last Succeeded</th>
+          <th>Found</th>
+          <th>Stored</th>
+          <th>State</th>
+          <th>Last Error</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows if row.kind == 'source' %}
+        <tr class="{% if row.is_error %}row-error{% endif %}">
+          <td class="status-name">{{ row.name }}</td>
+          <td class="status-time">
+            {% if row.last_attempted_at %}{{ row.last_attempted_at.strftime('%m-%d %H:%M') }}{% else %}&mdash;{% endif %}
+          </td>
+          <td class="status-time">
+            {% if row.last_succeeded_at %}{{ row.last_succeeded_at.strftime('%m-%d %H:%M') }}{% else %}&mdash;{% endif %}
+          </td>
+          <td class="status-num">{{ row.items_found or '&mdash;' }}</td>
+          <td class="status-num">{{ row.items_stored or '&mdash;' }}</td>
+          <td>
+            {% if row.is_error %}
+              <span class="status-pill pill-error">error</span>
+            {% elif row.last_succeeded_at %}
+              <span class="status-pill pill-ok">ok</span>
+            {% else %}
+              <span class="status-pill pill-pending">pending</span>
+            {% endif %}
+          </td>
+          <td class="status-error">
+            {% if row.last_error %}<span class="error-text" title="{{ row.last_error }}">{{ row.last_error[:80] }}{% if row.last_error|length > 80 %}&hellip;{% endif %}</span>{% else %}&mdash;{% endif %}
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7" class="empty-cell">No source pull data yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="status-section" style="margin-top: 2rem;">
+  <h2 class="section-title">Topic Synthesis Status</h2>
+  <div class="status-table-wrap">
+    <table class="status-table">
+      <thead>
+        <tr>
+          <th>Topic</th>
+          <th>Synthesis State</th>
+          <th>Last Run</th>
+          <th>Articles In</th>
+          <th>Articles Used</th>
+          <th>State</th>
+          <th>Last Error</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows if row.kind == 'topic' %}
+        <tr class="{% if row.is_error %}row-error{% endif %}">
+          <td class="status-name"><a href="/topic/{{ row.slug }}" class="status-topic-link">{{ row.name }}</a></td>
+          <td>
+            <span class="status-pill pill-{{ row.synthesis_status or 'pending' }}">
+              {{ row.synthesis_status or 'pending' }}
+            </span>
+          </td>
+          <td class="status-time">
+            {% if row.synthesis_last_run %}{{ row.synthesis_last_run.strftime('%m-%d %H:%M') }}{% else %}&mdash;{% endif %}
+          </td>
+          <td class="status-num">{{ row.items_found or '&mdash;' }}</td>
+          <td class="status-num">{{ row.items_stored or '&mdash;' }}</td>
+          <td>
+            {% if row.is_error %}
+              <span class="status-pill pill-error">error</span>
+            {% elif row.synthesis_status == 'done' %}
+              <span class="status-pill pill-ok">ok</span>
+            {% else %}
+              <span class="status-pill pill-pending">pending</span>
+            {% endif %}
+          </td>
+          <td class="status-error">
+            {% if row.last_error %}<span class="error-text" title="{{ row.last_error }}">{{ row.last_error[:80] }}{% if row.last_error|length > 80 %}&hellip;{% endif %}</span>{% else %}&mdash;{% endif %}
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7" class="empty-cell">No synthesis data yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>

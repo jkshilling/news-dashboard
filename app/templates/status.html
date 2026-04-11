@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Pull Status — News Intel{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">Pull Status</h1>
+  <p class="page-subtitle">Current operational state. Latest run data only — no historical log.</p>
+</div>
+
+{% include "partials/status_table.html" %}
+{% endblock %}

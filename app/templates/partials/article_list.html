@@ -1,0 +1,39 @@
+<div class="article-list" id="article-list">
+  {% for article in articles %}
+  <article class="article-item">
+    <div class="article-header">
+      <a href="{{ article.url }}" class="article-headline" target="_blank" rel="noopener noreferrer">
+        {{ article.headline }}
+      </a>
+      <span class="article-score" title="Relevance score">{{ "%.2f"|format(article.relevance_score) }}</span>
+    </div>
+
+    {% if article.snippet %}
+    <p class="article-snippet">{{ article.snippet[:240] }}{% if article.snippet|length > 240 %}&hellip;{% endif %}</p>
+    {% endif %}
+
+    <div class="article-meta">
+      <span class="article-source">
+        {% if article.source %}{{ article.source.name }}{% else %}Unknown{% endif %}
+      </span>
+      <span class="article-sep">&middot;</span>
+      <span class="article-date">
+        {% if article.published_at %}
+          {{ article.published_at.strftime('%b %d, %Y') }}
+        {% else %}
+          Date unknown
+        {% endif %}
+      </span>
+      <span class="article-sep">&middot;</span>
+      <a href="{{ article.url }}" class="article-outlink" target="_blank" rel="noopener noreferrer">
+        Read original &rarr;
+      </a>
+    </div>
+  </article>
+  {% else %}
+  <div class="empty-state">
+    <p>No articles found for this topic yet.</p>
+    <p>Run <code>python -m app.jobs.run_collection</code> to fetch articles.</p>
+  </div>
+  {% endfor %}
+</div>

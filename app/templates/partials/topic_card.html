@@ -1,0 +1,48 @@
+<a href="/topic/{{ s.topic.slug }}" class="topic-card-link">
+  <article class="topic-card status-{{ s.freshness }}">
+    <div class="card-header">
+      <div class="card-title-row">
+        <h2 class="card-title">{{ s.topic.name }}</h2>
+        <span class="status-dot dot-{{ s.freshness }}" title="{{ s.freshness }}"></span>
+      </div>
+      <span class="movement-tag movement-{{ s.movement | replace(' ', '-') }}">{{ s.movement }}</span>
+    </div>
+
+    <div class="card-topline">
+      {% if s.brief and s.brief.topline %}
+        <p class="topline-text">{{ s.brief.topline }}</p>
+      {% else %}
+        <p class="topline-empty">No brief generated.</p>
+      {% endif %}
+    </div>
+
+    <div class="card-footer">
+      <div class="card-meta">
+        <span class="meta-item">
+          <span class="meta-label">Last pull</span>
+          <span class="meta-value">
+            {% if s.last_pull_at %}
+              {{ s.last_pull_at.strftime('%b %d, %H:%M') }} UTC
+            {% else %}
+              &mdash;
+            {% endif %}
+          </span>
+        </span>
+        <span class="meta-item">
+          <span class="meta-label">Brief</span>
+          <span class="meta-value">
+            {% if s.brief and s.brief.generated_at %}
+              {{ s.brief.generated_at.strftime('%b %d, %H:%M') }} UTC
+            {% else %}
+              &mdash;
+            {% endif %}
+          </span>
+        </span>
+        <span class="meta-item">
+          <span class="meta-label">Articles</span>
+          <span class="meta-value">{{ s.article_count }}</span>
+        </span>
+      </div>
+    </div>
+  </article>
+</a>

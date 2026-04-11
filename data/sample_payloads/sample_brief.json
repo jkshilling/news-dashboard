@@ -1,0 +1,55 @@
+{
+  "topic_slug": "ai-regulation",
+  "topline": "AI regulatory momentum is accelerating on both sides of the Atlantic, with enforcement mechanisms now taking shape after years of policy debate.",
+  "executive_summary": "The EU AI Act has moved from legislative passage into an active enforcement preparation phase, creating immediate compliance pressure for developers of high-risk AI systems. Simultaneously, US federal action is intensifying through FTC inquiries and bipartisan Senate frameworks, though the US approach remains fragmented by sector rather than unified. The convergence of enforcement activity across major jurisdictions represents a structural shift from voluntary frameworks to binding obligation.",
+  "main_themes": [
+    "EU AI Act transitioning from law to enforcement practice",
+    "US federal posture shifting toward active investigation",
+    "Industry preparing compliance infrastructure under legal uncertainty",
+    "Bipartisan consensus forming around liability and transparency requirements"
+  ],
+  "what_changed": "Coverage volume up significantly (0 → 3 articles). New sources entered coverage: politico, reuters, the-verge. Initial brief for AI Regulation & Policy. No prior baseline to compare.",
+  "emerging_angles": [
+    "Sector-specific vs. horizontal regulatory architecture debate intensifying in US Congress",
+    "Foundation model developers facing novel discovery demands from FTC"
+  ],
+  "consensus": [
+    "High-risk AI systems will face mandatory assessments in the EU",
+    "US federal legislation, if it comes, will be sector-specific rather than omnibus",
+    "Transparency and liability are the cross-jurisdictional points of convergence"
+  ],
+  "disagreement": [
+    "Industry groups dispute compliance cost estimates and feasibility timelines",
+    "Civil society and regulators disagree on whether current frameworks address systemic risk adequately"
+  ],
+  "sentiment_summary": "Coverage is predominantly procedural, with regulatory bodies and Congress treated as the primary actors. Undertone of urgency in industry-facing reporting; measured optimism in civil society framing.",
+  "sentiment_labels": ["procedural", "speculative"],
+  "coverage_asymmetries": [
+    "EU regulatory mechanics receive more technical coverage than US equivalents",
+    "Developer/industry perspective covered primarily through lobbying documents, not direct testimony"
+  ],
+  "watch_items": [
+    "FTC document production demands from foundation model developers — timeline and scope",
+    "EU high-risk AI system category final definitions and conformity assessment procedures",
+    "Senate roadmap response from White House OSTP"
+  ],
+  "narrative_frames": [
+    {
+      "label": "Global Regulatory Race",
+      "status": "dominant",
+      "evidence": "EU enforcement timeline and US bipartisan frameworks both activating within the same news cycle, framed as a transatlantic competition for AI governance standard-setting."
+    },
+    {
+      "label": "Industry Under Siege",
+      "status": "emerging",
+      "evidence": "FTC inquiry characterised by industry sources as adversarial; language of 'compliance costs' and 'legal uncertainty' appearing across multiple outlets."
+    },
+    {
+      "label": "Voluntary Frameworks Insufficient",
+      "status": "fading",
+      "evidence": "Earlier framing of self-regulatory adequacy largely absent from current coverage as binding legal instruments take center stage."
+    }
+  ],
+  "generated_at": "2024-03-15T12:00:00",
+  "article_count": 3
+}

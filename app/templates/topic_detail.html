@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}{{ topic.name }} — News Intel{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <a href="/" class="back-link">&larr; Coverage Index</a>
+  <h1 class="page-title">{{ topic.name }}</h1>
+  {% if topic.description %}
+  <p class="page-subtitle">{{ topic.description }}</p>
+  {% endif %}
+  <div class="topic-meta">
+    <span class="meta-label">Monitoring:</span>
+    <span class="meta-value">{{ topic.query_terms | join(", ") }}</span>
+  </div>
+</div>
+
+<div class="detail-layout">
+
+  {# === BRIEF PANEL === #}
+  <section class="brief-section">
+    {% if brief %}
+      {% include "partials/brief_panel.html" %}
+    {% else %}
+      <div class="empty-state">
+        <p>No brief generated yet for this topic.</p>
+        <p>Run <code>python -m app.jobs.run_synthesis --topic {{ topic.slug }}</code> to generate.</p>
+      </div>
+    {% endif %}
+  </section>
+
+  {# === ARTICLE STREAM === #}
+  <section class="articles-section">
+    <div class="section-header">
+      <h2 class="section-title">Article Stream</h2>
+      <span class="article-count">{{ articles | length }} articles</span>
+    </div>
+
+    {# Filters #}
+    <form class="filter-bar" method="GET" action="/topic/{{ topic.slug }}">
+      <div class="filter-group">
+        <label class="filter-label">Sort</label>
+        <select name="sort" class="filter-select" onchange="this.form.submit()">
+          <option value="newest" {% if current_sort == 'newest' %}selected{% endif %}>Newest first</option>
+          <option value="oldest" {% if current_sort == 'oldest' %}selected{% endif %}>Oldest first</option>
+          <option value="score" {% if current_sort == 'score' %}selected{% endif %}>Relevance</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Source</label>
+        <select name="source_id" class="filter-select" onchange="this.form.submit()">
+          <option value="">All sources</option>
+          {% for src in sources %}
+          <option value="{{ src.id }}" {% if current_source_id == src.id %}selected{% endif %}>{{ src.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </form>
+
+    {# Article list #}
+    {% include "partials/article_list.html" %}
+  </section>
+
+</div>
+{% endblock %}

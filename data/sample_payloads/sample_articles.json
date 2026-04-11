@@ -1,0 +1,110 @@
+[
+  {
+    "topic_slug": "ai-regulation",
+    "source_slug": "reuters",
+    "headline": "EU AI Act enters enforcement phase as regulators prepare compliance framework",
+    "snippet": "European Union officials confirmed the AI Act's phased enforcement schedule, with high-risk AI systems facing mandatory assessments beginning in 2025. Industry groups warn of compliance costs while civil society organizations call the framework a global model.",
+    "url": "https://www.reuters.com/technology/eu-ai-act-enforcement-2024-sample",
+    "canonical_url": "https://www.reuters.com/technology/eu-ai-act-enforcement-2024-sample",
+    "published_at": "2024-03-15T09:30:00",
+    "relevance_score": 0.85,
+    "matched_terms": ["AI regulation[title]", "EU AI Act[title]", "+legislation"],
+    "match_reason": "Matched: AI regulation[title], EU AI Act[title], +legislation"
+  },
+  {
+    "topic_slug": "ai-regulation",
+    "source_slug": "the-verge",
+    "headline": "FTC launches inquiry into foundation model developers over consumer protection concerns",
+    "snippet": "The Federal Trade Commission has opened a broad inquiry into several major AI foundation model companies, requesting documents related to training data practices, consumer disclosure, and competitive conduct. The action follows months of pressure from consumer advocates.",
+    "url": "https://www.theverge.com/2024/ftc-ai-inquiry-sample",
+    "canonical_url": "https://www.theverge.com/2024/ftc-ai-inquiry-sample",
+    "published_at": "2024-03-14T14:00:00",
+    "relevance_score": 0.78,
+    "matched_terms": ["AI governance[snippet]", "+FTC", "+enforcement"],
+    "match_reason": "Matched: AI governance[snippet], +FTC, +enforcement"
+  },
+  {
+    "topic_slug": "ai-regulation",
+    "source_slug": "politico",
+    "headline": "Senate AI working group releases bipartisan roadmap for federal AI legislation",
+    "snippet": "A bipartisan Senate working group released a 30-page roadmap for federal AI legislation, recommending sector-specific approaches over a comprehensive omnibus bill. The framework emphasizes liability standards, transparency requirements, and government use provisions.",
+    "url": "https://www.politico.com/news/2024/senate-ai-roadmap-sample",
+    "canonical_url": "https://www.politico.com/news/2024/senate-ai-roadmap-sample",
+    "published_at": "2024-03-13T18:45:00",
+    "relevance_score": 0.92,
+    "matched_terms": ["AI legislation[title]", "+Congress", "+Senate"],
+    "match_reason": "Matched: AI legislation[title], +Congress, +Senate"
+  },
+  {
+    "topic_slug": "cybersecurity-threats",
+    "source_slug": "securityweek",
+    "headline": "Chinese APT group targets US critical infrastructure in prolonged intrusion campaign",
+    "snippet": "CISA and the FBI jointly attributed a multi-month intrusion campaign targeting US water and energy sector infrastructure to a Chinese state-sponsored threat actor. The agencies released technical indicators and urged immediate patching of affected systems.",
+    "url": "https://www.securityweek.com/2024/chinese-apt-infrastructure-sample",
+    "canonical_url": "https://www.securityweek.com/2024/chinese-apt-infrastructure-sample",
+    "published_at": "2024-03-15T11:00:00",
+    "relevance_score": 0.95,
+    "matched_terms": ["nation-state hacking[title]", "critical infrastructure attack[snippet]", "+CISA", "+APT"],
+    "match_reason": "Matched: nation-state hacking[title], critical infrastructure attack[snippet], +CISA, +APT"
+  },
+  {
+    "topic_slug": "cybersecurity-threats",
+    "source_slug": "ars-technica",
+    "headline": "Ransomware group publishes stolen hospital records after $3M payment refused",
+    "snippet": "A ransomware syndicate published sensitive patient records from a regional hospital network after the organization declined to pay a $3 million demand. Healthcare security experts warn the incident reflects an escalating pattern of attacks on medical institutions.",
+    "url": "https://arstechnica.com/security/2024/ransomware-hospital-records-sample",
+    "canonical_url": "https://arstechnica.com/security/2024/ransomware-hospital-records-sample",
+    "published_at": "2024-03-14T16:20:00",
+    "relevance_score": 0.88,
+    "matched_terms": ["ransomware[title]", "data breach[snippet]"],
+    "match_reason": "Matched: ransomware[title], data breach[snippet]"
+  },
+  {
+    "topic_slug": "cybersecurity-threats",
+    "source_slug": "reuters",
+    "headline": "Justice Department unseals indictment against four members of Russian hacking group",
+    "snippet": "Federal prosecutors unsealed indictments against four alleged members of a Russian cybercriminal group responsible for financial sector intrusions affecting hundreds of institutions across 12 countries. The group is accused of deploying custom malware to exfiltrate credentials.",
+    "url": "https://www.reuters.com/legal/2024/doj-russia-hacking-indictment-sample",
+    "canonical_url": "https://www.reuters.com/legal/2024/doj-russia-hacking-indictment-sample",
+    "published_at": "2024-03-13T20:00:00",
+    "relevance_score": 0.82,
+    "matched_terms": ["cyber espionage[snippet]", "+FBI", "+indictment"],
+    "match_reason": "Matched: cyber espionage[snippet], +FBI, +indictment"
+  },
+  {
+    "topic_slug": "energy-transition",
+    "source_slug": "reuters",
+    "headline": "IEA report: clean energy investment to exceed fossil fuels globally for first time",
+    "snippet": "The International Energy Agency's annual World Energy Investment report projects that clean energy investment will surpass fossil fuel investment globally in 2024 for the first time on record, driven primarily by solar expansion in China, the US, and Europe.",
+    "url": "https://www.reuters.com/business/energy/iea-clean-energy-investment-2024-sample",
+    "canonical_url": "https://www.reuters.com/business/energy/iea-clean-energy-investment-2024-sample",
+    "published_at": "2024-03-15T08:00:00",
+    "relevance_score": 0.91,
+    "matched_terms": ["clean energy policy[snippet]", "IEA energy[title]", "+solar", "+battery storage"],
+    "match_reason": "Matched: clean energy policy[snippet], IEA energy[title], +solar, +battery storage"
+  },
+  {
+    "topic_slug": "energy-transition",
+    "source_slug": "ee-news",
+    "headline": "DOE announces $6 billion in grid modernization grants under Inflation Reduction Act",
+    "snippet": "The Department of Energy announced a new round of grid modernization grants totaling $6 billion, funded through the Inflation Reduction Act. Grants target transmission expansion, battery storage deployment, and offshore wind interconnection across 18 states.",
+    "url": "https://www.eenews.net/articles/doe-grid-grants-ira-sample",
+    "canonical_url": "https://www.eenews.net/articles/doe-grid-grants-ira-sample",
+    "published_at": "2024-03-14T13:30:00",
+    "relevance_score": 0.89,
+    "matched_terms": ["electricity grid transformation[snippet]", "+DOE", "+IRA", "+offshore wind", "+battery storage"],
+    "match_reason": "Matched: electricity grid transformation[snippet], +DOE, +IRA, +offshore wind, +battery storage"
+  },
+  {
+    "topic_slug": "energy-transition",
+    "source_slug": "politico",
+    "headline": "OPEC+ signals extended production cuts as oil market faces demand uncertainty",
+    "snippet": "OPEC+ members agreed in closed-door talks to extend voluntary production cuts through the second quarter, citing uncertainty over demand from China and the pace of energy transition in Europe. The decision pushes back against projections of peak oil consumption.",
+    "url": "https://www.politico.com/news/2024/opec-production-cuts-sample",
+    "canonical_url": "https://www.politico.com/news/2024/opec-production-cuts-sample",
+    "published_at": "2024-03-13T12:00:00",
+    "relevance_score": 0.74,
+    "matched_terms": ["fossil fuel phase-out[snippet]", "+OPEC"],
+    "match_reason": "Matched: fossil fuel phase-out[snippet], +OPEC"
+  }
+]

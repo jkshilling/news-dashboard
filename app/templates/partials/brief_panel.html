@@ -1,0 +1,129 @@
+<div class="brief-panel">
+  <div class="brief-header">
+    <h2 class="brief-title">Intelligence Brief</h2>
+    <span class="brief-timestamp">
+      Generated {{ brief.generated_at.strftime('%Y-%m-%d %H:%M') }} UTC
+      &mdash; {{ brief.article_count }} articles synthesised
+    </span>
+  </div>
+
+  {% if brief.sentiment_labels %}
+  <div class="sentiment-row">
+    {% for label in brief.sentiment_labels %}
+    <span class="sentiment-tag">{{ label }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if brief.topline %}
+  <div class="brief-topline">
+    <p>{{ brief.topline }}</p>
+  </div>
+  {% endif %}
+
+  {% if brief.executive_summary %}
+  <div class="brief-block">
+    <h3 class="brief-block-title">Executive Summary</h3>
+    <p class="brief-prose">{{ brief.executive_summary }}</p>
+  </div>
+  {% endif %}
+
+  {% if brief.main_themes %}
+  <div class="brief-block">
+    <h3 class="brief-block-title">Main Themes</h3>
+    <ul class="brief-list">
+      {% for theme in brief.main_themes %}
+      <li>{{ theme }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if brief.what_changed %}
+  <div class="brief-block brief-block--highlight">
+    <h3 class="brief-block-title">What Changed</h3>
+    <p class="brief-prose">{{ brief.what_changed }}</p>
+  </div>
+  {% endif %}
+
+  {% if brief.narrative_frames %}
+  <div class="brief-block">
+    <h3 class="brief-block-title">Narrative Frames</h3>
+    <div class="frame-grid">
+      {% for frame in brief.narrative_frames %}
+      <div class="frame-card frame-{{ frame.status }}">
+        <div class="frame-header">
+          <span class="frame-label">{{ frame.label }}</span>
+          <span class="frame-status frame-status--{{ frame.status }}">{{ frame.status }}</span>
+        </div>
+        <p class="frame-evidence">{{ frame.evidence }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if brief.emerging_angles %}
+  <div class="brief-block">
+    <h3 class="brief-block-title">Emerging Angles</h3>
+    <ul class="brief-list">
+      {% for angle in brief.emerging_angles %}
+      <li>{{ angle }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <div class="brief-two-col">
+    {% if brief.consensus %}
+    <div class="brief-block">
+      <h3 class="brief-block-title">Consensus</h3>
+      <ul class="brief-list">
+        {% for item in brief.consensus %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    {% if brief.disagreement %}
+    <div class="brief-block">
+      <h3 class="brief-block-title">Disagreement</h3>
+      <ul class="brief-list brief-list--tension">
+        {% for item in brief.disagreement %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+
+  {% if brief.coverage_asymmetries %}
+  <div class="brief-block">
+    <h3 class="brief-block-title">Coverage Asymmetries</h3>
+    <ul class="brief-list brief-list--dim">
+      {% for item in brief.coverage_asymmetries %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if brief.watch_items %}
+  <div class="brief-block">
+    <h3 class="brief-block-title">Watch Items</h3>
+    <ul class="brief-list brief-list--watch">
+      {% for item in brief.watch_items %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if brief.sentiment_summary %}
+  <div class="brief-block">
+    <h3 class="brief-block-title">Sentiment / Tone</h3>
+    <p class="brief-prose brief-prose--dim">{{ brief.sentiment_summary }}</p>
+  </div>
+  {% endif %}
+</div>

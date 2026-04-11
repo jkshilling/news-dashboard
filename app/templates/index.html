@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Coverage Index — News Intel{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">Coverage Index</h1>
+  <p class="page-subtitle">Monitored topics, latest briefing status, and coverage movement.</p>
+</div>
+
+<div class="topic-grid">
+  {% for s in summaries %}
+    {% include "partials/topic_card.html" %}
+  {% else %}
+    <div class="empty-state">
+      <p>No topics configured. Run <code>python scripts/seed_topics.py</code> to load topics.</p>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
