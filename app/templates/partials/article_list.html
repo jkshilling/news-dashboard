@@ -19,7 +19,7 @@
       <span class="article-sep">&middot;</span>
       <span class="article-date">
         {% if article.published_at %}
-          {{ article.published_at.strftime('%b %d, %Y') }}
+          {{ article.published_at.strftime('%b %-d, %Y') }}
         {% else %}
           Date unknown
         {% endif %}

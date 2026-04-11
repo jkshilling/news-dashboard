@@ -21,21 +21,13 @@
         <span class="meta-item">
           <span class="meta-label">Last pull</span>
           <span class="meta-value">
-            {% if s.last_pull_at %}
-              {{ s.last_pull_at.strftime('%b %d, %H:%M') }} UTC
-            {% else %}
-              &mdash;
-            {% endif %}
+            {{ s.last_pull_at | akdt('%-m/%-d %-I:%M %p') }}
           </span>
         </span>
         <span class="meta-item">
           <span class="meta-label">Brief</span>
           <span class="meta-value">
-            {% if s.brief and s.brief.generated_at %}
-              {{ s.brief.generated_at.strftime('%b %d, %H:%M') }} UTC
-            {% else %}
-              &mdash;
-            {% endif %}
+            {% if s.brief and s.brief.generated_at %}{{ s.brief.generated_at | akdt('%-m/%-d %-I:%M %p') }}{% else %}&mdash;{% endif %}
           </span>
         </span>
         <span class="meta-item">

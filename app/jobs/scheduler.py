@@ -15,7 +15,7 @@ def start_scheduler():
 
     init_db()
 
-    scheduler = BackgroundScheduler(timezone="UTC")
+    scheduler = BackgroundScheduler(timezone="America/Anchorage")
 
     def collection_job():
         log.info("Scheduler: starting collection job")

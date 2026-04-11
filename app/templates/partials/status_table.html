@@ -5,12 +5,12 @@
       <thead>
         <tr>
           <th>Source</th>
-          <th>Last Attempted</th>
-          <th>Last Succeeded</th>
-          <th>Found</th>
-          <th>Stored</th>
-          <th>State</th>
-          <th>Last Error</th>
+          <th style="text-align:center">Last Attempted</th>
+          <th style="text-align:center">Last Succeeded</th>
+          <th style="text-align:center">Found</th>
+          <th style="text-align:center">Stored</th>
+          <th style="text-align:center">State</th>
+          <th style="text-align:center">Last Error</th>
         </tr>
       </thead>
       <tbody>
@@ -18,14 +18,14 @@
         <tr class="{% if row.is_error %}row-error{% endif %}">
           <td class="status-name">{{ row.name }}</td>
           <td class="status-time">
-            {% if row.last_attempted_at %}{{ row.last_attempted_at.strftime('%m-%d %H:%M') }}{% else %}&mdash;{% endif %}
+            {{ row.last_attempted_at | akdt }}
           </td>
           <td class="status-time">
-            {% if row.last_succeeded_at %}{{ row.last_succeeded_at.strftime('%m-%d %H:%M') }}{% else %}&mdash;{% endif %}
+            {{ row.last_succeeded_at | akdt }}
           </td>
-          <td class="status-num">{{ row.items_found or '&mdash;' }}</td>
-          <td class="status-num">{{ row.items_stored or '&mdash;' }}</td>
-          <td>
+          <td class="status-num">{{ row.items_found if row.items_found is not none else '—' }}</td>
+          <td class="status-num">{{ row.items_stored if row.items_stored is not none else '—' }}</td>
+          <td style="text-align:center">
             {% if row.is_error %}
               <span class="status-pill pill-error">error</span>
             {% elif row.last_succeeded_at %}
@@ -53,29 +53,29 @@
       <thead>
         <tr>
           <th>Topic</th>
-          <th>Synthesis State</th>
-          <th>Last Run</th>
-          <th>Articles In</th>
-          <th>Articles Used</th>
-          <th>State</th>
-          <th>Last Error</th>
+          <th style="text-align:center">Synthesis State</th>
+          <th style="text-align:center">Last Run</th>
+          <th style="text-align:center">Articles In</th>
+          <th style="text-align:center">Articles Used</th>
+          <th style="text-align:center">State</th>
+          <th style="text-align:center">Last Error</th>
         </tr>
       </thead>
       <tbody>
         {% for row in rows if row.kind == 'topic' %}
         <tr class="{% if row.is_error %}row-error{% endif %}">
           <td class="status-name"><a href="/topic/{{ row.slug }}" class="status-topic-link">{{ row.name }}</a></td>
-          <td>
+          <td style="text-align:center">
             <span class="status-pill pill-{{ row.synthesis_status or 'pending' }}">
               {{ row.synthesis_status or 'pending' }}
             </span>
           </td>
           <td class="status-time">
-            {% if row.synthesis_last_run %}{{ row.synthesis_last_run.strftime('%m-%d %H:%M') }}{% else %}&mdash;{% endif %}
+            {{ row.synthesis_last_run | akdt }}
           </td>
-          <td class="status-num">{{ row.items_found or '&mdash;' }}</td>
-          <td class="status-num">{{ row.items_stored or '&mdash;' }}</td>
-          <td>
+          <td class="status-num">{{ row.items_found if row.items_found is not none else '—' }}</td>
+          <td class="status-num">{{ row.items_stored if row.items_stored is not none else '—' }}</td>
+          <td style="text-align:center">
             {% if row.is_error %}
               <span class="status-pill pill-error">error</span>
             {% elif row.synthesis_status == 'done' %}

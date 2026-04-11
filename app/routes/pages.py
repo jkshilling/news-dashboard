@@ -1,5 +1,8 @@
 from __future__ import annotations
+from datetime import datetime, timezone
 from typing import Optional
+from zoneinfo import ZoneInfo
+
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -14,8 +17,21 @@ from app.repositories import (
 )
 from app.services import status_service
 
+ALASKA = ZoneInfo("America/Anchorage")
+
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
+
+
+def _to_akdt(dt: datetime | None, fmt: str = "%m-%d %H:%M") -> str:
+    if dt is None:
+        return "—"
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(ALASKA).strftime(fmt)
+
+
+templates.env.filters["akdt"] = _to_akdt
 
 
 @router.get("/", response_class=HTMLResponse)
@@ -31,18 +47,20 @@ async def topic_detail(
     request: Request,
     slug: str,
     sort: str = "newest",
-    source_id: Optional[int] = None,
+    source_id: Optional[str] = None,
     db: Session = Depends(get_db),
 ):
     topic = topic_repository.get_by_slug(db, slug)
     if not topic:
         raise HTTPException(status_code=404, detail="Topic not found")
 
+    source_id_int = int(source_id) if source_id and source_id.isdigit() else None
+
     brief = brief_repository.get_by_topic(db, topic.id)
     articles = article_repository.get_by_topic(
-        db, topic.id, limit=50, sort=sort, source_id=source_id
+        db, topic.id, limit=50, sort=sort, source_id=source_id_int
     )
-    sources = source_repository.get_all(db, active_only=False)
+    sources = source_repository.get_all(db, active_only=True)
 
     return templates.TemplateResponse(request, "topic_detail.html", {
         "topic": topic,
@@ -50,7 +68,7 @@ async def topic_detail(
         "articles": articles,
         "sources": sources,
         "current_sort": sort,
-        "current_source_id": source_id,
+        "current_source_id": source_id_int,
     })
 
 
