@@ -72,9 +72,32 @@ async def topic_detail(
     })
 
 
+CATEGORY_ORDER = ["statewide", "regional", "industry", "opinion", "national", "other"]
+CATEGORY_LABELS = {
+    "statewide": "Statewide",
+    "regional": "Regional",
+    "industry": "Industry",
+    "opinion": "Opinion & Commentary",
+    "national": "National",
+    "other": "Other",
+}
+
 @router.get("/status", response_class=HTMLResponse)
 async def status_page(request: Request, db: Session = Depends(get_db)):
     rows = status_service.get_status_table(db)
+    source_rows = [r for r in rows if r["kind"] == "source"]
+    topic_rows = [r for r in rows if r["kind"] == "topic"]
+    # Normalize unknown category_tags to "other"
+    known = set(CATEGORY_ORDER)
+    for r in source_rows:
+        if r["category_tag"] not in known:
+            r["category_tag"] = "other"
+    source_groups = []
+    for cat_key in CATEGORY_ORDER:
+        group = [r for r in source_rows if r["category_tag"] == cat_key]
+        if group:
+            source_groups.append({"label": CATEGORY_LABELS[cat_key], "rows": group})
     return templates.TemplateResponse(request, "status.html", {
-        "rows": rows,
+        "source_groups": source_groups,
+        "topic_rows": topic_rows,
     })

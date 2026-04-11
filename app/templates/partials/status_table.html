@@ -14,15 +14,15 @@
         </tr>
       </thead>
       <tbody>
-        {% for row in rows if row.kind == 'source' %}
+        {% for group in source_groups %}
+        <tr class="status-group-row">
+          <td colspan="7" class="status-category-label">{{ group.label }}</td>
+        </tr>
+        {% for row in group.rows %}
         <tr class="{% if row.is_error %}row-error{% endif %}">
           <td class="status-name">{{ row.name }}</td>
-          <td class="status-time">
-            {{ row.last_attempted_at | akdt('%-m/%-d %-I:%M %p') }}
-          </td>
-          <td class="status-time">
-            {{ row.last_succeeded_at | akdt('%-m/%-d %-I:%M %p') }}
-          </td>
+          <td class="status-time">{{ row.last_attempted_at | akdt('%-m/%-d %-I:%M %p') }}</td>
+          <td class="status-time">{{ row.last_succeeded_at | akdt('%-m/%-d %-I:%M %p') }}</td>
           <td class="status-num">{{ row.items_found if row.items_found is not none else '—' }}</td>
           <td class="status-num">{{ row.items_stored if row.items_stored is not none else '—' }}</td>
           <td style="text-align:center">
@@ -38,15 +38,14 @@
             {% if row.last_error %}{{ row.last_attempted_at | akdt('%-m/%-d %-I:%M %p') }}{% else %}—{% endif %}
           </td>
         </tr>
-        {% else %}
-        <tr><td colspan="7" class="empty-cell">No source pull data yet.</td></tr>
+        {% endfor %}
         {% endfor %}
       </tbody>
     </table>
   </div>
 </div>
 
-<div class="status-section" style="margin-top: 2rem;">
+<div class="status-section" style="margin-top: 4rem;">
   <h2 class="section-title">Topic Synthesis Status</h2>
   <div class="status-table-wrap">
     <table class="status-table">
@@ -62,7 +61,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for row in rows if row.kind == 'topic' %}
+        {% for row in topic_rows %}
         <tr class="{% if row.is_error %}row-error{% endif %}">
           <td class="status-name"><a href="/topic/{{ row.slug }}" class="status-topic-link">{{ row.name }}</a></td>
           <td style="text-align:center">

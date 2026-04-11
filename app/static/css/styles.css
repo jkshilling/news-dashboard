@@ -408,11 +408,12 @@ a:hover { color: var(--accent); }
 }
 
 .section-title {
-  font-size: 0.7rem;
+  font-size: 0.9rem;
   font-family: var(--font-mono);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: var(--text);
+  margin-bottom: 1rem;
 }
 
 .article-count {
@@ -512,6 +513,9 @@ a:hover { color: var(--accent); }
 
 /* ---- STATUS TABLE ---- */
 .status-section { margin-bottom: 2rem; }
+.status-category-label { font-size: 0.68rem; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); }
+.status-group-row td { background: var(--bg-elevated); padding: 0.5rem 1rem; border-top: 1px solid var(--border); }
+.status-group-row .status-category-label { color: var(--accent); font-size: 0.72rem; }
 
 .status-table-wrap { overflow-x: auto; }
 

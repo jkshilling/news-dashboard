@@ -77,13 +77,14 @@ def get_status_table(db: Session) -> list[dict]:
     rows = []
 
     # Per-source pull statuses
-    sources = db.query(Source).filter(Source.active == True).order_by(Source.name).all()  # noqa: E712
+    sources = db.query(Source).filter(Source.active == True).order_by(Source.category_tag, Source.name).all()  # noqa: E712
     for source in sources:
         ps = status_repository.get_by_topic_source(db, topic_id=None, source_id=source.id)
         rows.append({
             "kind": "source",
             "name": source.name,
             "slug": source.slug,
+            "category_tag": source.category_tag if source.category_tag else "other",
             "last_attempted_at": ps.last_attempted_at if ps else None,
             "last_succeeded_at": ps.last_succeeded_at if ps else None,
             "items_found": ps.items_found if ps else 0,

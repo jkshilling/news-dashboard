@@ -25,6 +25,10 @@ for source in db.query(Source).all():
         cfg = cfg_by_slug[source.slug]
         source.active = cfg["active"]
         source.feed_url = cfg["feed_url"]
+        source.category_tag = cfg.get("category_tag")
+        source.bias_tag = cfg.get("bias_tag")
+        source.fetch_priority = cfg.get("fetch_priority", 2)
+        source.name = cfg["name"]
         print(f"Updated  {source.slug}: active={source.active}")
 
 existing_slugs = {s.slug for s in db.query(Source).all()}
