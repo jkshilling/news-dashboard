@@ -1,11 +1,27 @@
+import os
 from pathlib import Path
+from pydantic import Field
 from pydantic_settings import BaseSettings
 
 BASE_DIR = Path(__file__).parent.parent
 
+# Centralized credentials pattern (see Jordan's
+# reference_centralized_credentials_pattern memory): the OpenAI key lives at
+# ~/Documents/Claude/.openai-key with mode 0600, shared across projects.
+# Process env (OPENAI_API_KEY) still wins so the droplet can override at boot
+# via its systemd EnvironmentFile.
+def _load_openai_key_from_shared_file() -> str:
+    env = os.environ.get("OPENAI_API_KEY", "").strip()
+    if env:
+        return env
+    canonical = Path.home() / "Documents" / "Claude" / ".openai-key"
+    if canonical.exists():
+        return canonical.read_text().strip()
+    return ""
+
 
 class Settings(BaseSettings):
-    OPENAI_API_KEY: str = ""
+    OPENAI_API_KEY: str = Field(default_factory=_load_openai_key_from_shared_file)
     DATABASE_URL: str = f"sqlite:///{BASE_DIR}/data/app.db"
     APP_ENV: str = "development"
     MAX_ARTICLES_PER_TOPIC: int = 100
