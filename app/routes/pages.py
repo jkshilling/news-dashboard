@@ -4,7 +4,7 @@ from typing import Optional
 from zoneinfo import ZoneInfo
 
 from fastapi import APIRouter, Depends, HTTPException, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
@@ -40,6 +40,21 @@ async def index(request: Request, db: Session = Depends(get_db)):
     return templates.TemplateResponse(request, "index.html", {
         "summaries": summaries,
     })
+
+
+@router.get("/sitemap.xml")
+async def sitemap(db: Session = Depends(get_db)):
+    base = "https://news.alaskatargeting.com"
+    topics = topic_repository.get_all(db)
+    parts = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+        f"<url><loc>{base}/</loc></url>",
+    ]
+    for t in topics:
+        parts.append(f"<url><loc>{base}/topic/{t.slug}</loc></url>")
+    parts.append("</urlset>")
+    return Response(content="\n".join(parts), media_type="application/xml")
 
 
 @router.get("/topic/{slug}", response_class=HTMLResponse)
