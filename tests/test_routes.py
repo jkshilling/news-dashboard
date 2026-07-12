@@ -130,9 +130,9 @@ class TestHomepage:
         response = client.get("/")
         assert response.status_code == 200
 
-    def test_homepage_contains_coverage_index(self, client):
+    def test_homepage_contains_topics_heading(self, client):
         response = client.get("/")
-        assert "Coverage Index" in response.text
+        assert "Topics" in response.text
 
     def test_homepage_shows_topics_when_seeded(self, seeded_client):
         response = seeded_client.get("/")
