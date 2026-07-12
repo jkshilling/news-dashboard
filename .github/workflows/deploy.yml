@@ -1,0 +1,111 @@
+name: Deploy
+
+# Standardized deploy workflow — see jkshilling memory: reference_gh_deploy_ssh.md
+# Test -> Deploy gating: deploy only runs if smoke tests pass.
+# Untrusted inputs (commit message) are passed via env and quoted — do not
+# inline ${{ github.event.* }} strings into run: blocks.
+# NOTE: data/ (app.db) and .env are PERSISTENT server-side state — rsync-excluded,
+# never rebuilt or overwritten on deploy.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.event.repository.name }}
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405  # v6.2.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - name: Install deps
+        run: pip install -r requirements-dev.txt
+      - name: Run tests
+        run: pytest -q
+
+  deploy:
+    needs: [test]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+
+      - name: Configure SSH
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Rsync + remote deploy
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          set -euo pipefail
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_deploy -o IdentitiesOnly=yes" \
+            --rsync-path='sudo -u www-data rsync' \
+            --exclude-from='deploy/rsync-excludes.txt' \
+            ./ "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/"
+
+          ssh -i ~/.ssh/id_deploy -o IdentitiesOnly=yes "${DEPLOY_USER}@${DEPLOY_HOST}" bash <<'REMOTE'
+            set -euo pipefail
+            cd /srv/news-intel-dashboard
+            sudo -u www-data .venv/bin/pip install -q -r requirements.txt
+            systemctl restart news-intel.service
+            sleep 2
+            systemctl is-active news-intel.service
+          REMOTE
+
+      - name: Smoke test
+        run: |
+          for i in 1 2 3 4 5; do
+            if curl -sSf --max-time 10 https://news.alaskatargeting.com/ >/dev/null; then
+              echo "OK"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "homepage never came up" >&2
+          exit 1
+
+  notify:
+    needs: [deploy]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post to Discord deploys
+        env:
+          WEBHOOK: ${{ secrets.DISCORD_DEPLOY_WEBHOOK }}
+          RESULT: ${{ needs.deploy.result }}
+          REPO: ${{ github.event.repository.name }}
+          SHA: ${{ github.sha }}
+          MSG: ${{ github.event.head_commit.message }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          case "$RESULT" in
+            success) EMOJI="🟢"; STATUS="deployed" ;;
+            *)       EMOJI="🔴"; STATUS="$RESULT" ;;
+          esac
+          SHORT_SHA="${SHA:0:7}"
+          FIRST_LINE=$(printf "%s" "$MSG" | head -n1)
+          CONTENT=$(printf "%s **%s** %s\n\`%s\` — %s\n<%s>" "$EMOJI" "$REPO" "$STATUS" "$SHORT_SHA" "$FIRST_LINE" "$RUN_URL")
+          PAYLOAD=$(jq -nc --arg u "Telegraph" --arg c "$CONTENT" "{username: \$u, content: \$c}")
+          curl -sS -H "Content-Type: application/json" -X POST "$WEBHOOK" -d "$PAYLOAD"
